@@ -1,6 +1,7 @@
 :root {
   --pink: #ff2d92;
   --pink-soft: #ff5fb0;
+  --pink-aa: #d6006f; /* white text on this = 5.1:1 */
   --cyan: #22d3ee;
   --ink: #06060f;
   --font-display: 'Anton', 'Impact', 'Arial Narrow', sans-serif;
@@ -225,7 +226,7 @@ body {
   padding: 13px 18px;
   border: none;
   border-radius: 2px;
-  background: var(--pink);
+  background: var(--pink-aa);
   color: #fff;
   font-family: var(--font-ui);
   font-weight: 600;
@@ -241,7 +242,7 @@ body {
 }
 
 .start-game-btn:hover {
-  background: var(--pink-soft);
+  background: #e8007a;
   transform: translateX(4px);
   box-shadow: 0 0 28px rgba(255, 45, 146, 0.8), 0 8px 24px rgba(0, 0, 0, 0.5);
 }
@@ -347,27 +348,39 @@ body {
   transform: translateX(-50%);
   z-index: 15;
   display: flex;
-  gap: 8px;
-  padding: 6px 12px;
+  gap: 0;
+  padding: 0 6px;
   border-radius: 999px;
   background: rgba(0, 0, 0, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .dot {
-  width: 9px;
-  height: 9px;
+  position: relative;
+  width: 24px;
+  height: 24px;
   border: none;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.85);
+  background: transparent;
   cursor: pointer;
   padding: 0;
+}
+
+.dot::before {
+  content: '';
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  transform: translate(-50%, -50%);
   transition: transform 0.2s, background 0.2s;
 }
 
-.dot:hover { transform: scale(1.25); }
+.dot:hover::before { transform: translate(-50%, -50%) scale(1.25); }
 
-.dot.active {
+.dot.active::before {
   background: var(--pink);
   box-shadow: 0 0 8px var(--pink);
 }

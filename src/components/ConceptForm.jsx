@@ -1,5 +1,8 @@
 import { useState } from 'react';
 
+const GENRES = ['Action', 'Puzzle', 'RPG', 'Survival', 'Narrative', 'Platformer', 'Roguelike', 'Strategy'];
+const MOODS = ['Dark', 'Playful', 'Epic', 'Mysterious', 'Minimalist', 'Cyberpunk', 'Noir'];
+
 export default function ConceptForm({ onGenerate, loading }) {
   const [formData, setFormData] = useState({
     genre: 'Action',
@@ -20,35 +23,23 @@ export default function ConceptForm({ onGenerate, loading }) {
   return (
     <form onSubmit={handleSubmit} className="concept-form">
       <div className="form-group">
-        <label>Genre</label>
-        <select name="genre" value={formData.genre} onChange={handleChange}>
-          <option>Action</option>
-          <option>Puzzle</option>
-          <option>RPG</option>
-          <option>Survival</option>
-          <option>Narrative</option>
-          <option>Platformer</option>
-          <option>Roguelike</option>
-          <option>Strategy</option>
+        <label htmlFor="concept-genre">Genre</label>
+        <select id="concept-genre" name="genre" value={formData.genre} onChange={handleChange}>
+          {GENRES.map((g) => <option key={g}>{g}</option>)}
         </select>
       </div>
 
       <div className="form-group">
-        <label>Mood</label>
-        <select name="mood" value={formData.mood} onChange={handleChange}>
-          <option>Dark</option>
-          <option>Playful</option>
-          <option>Epic</option>
-          <option>Mysterious</option>
-          <option>Minimalist</option>
-          <option>Cyberpunk</option>
-          <option>Noir</option>
+        <label htmlFor="concept-mood">Mood</label>
+        <select id="concept-mood" name="mood" value={formData.mood} onChange={handleChange}>
+          {MOODS.map((m) => <option key={m}>{m}</option>)}
         </select>
       </div>
 
       <div className="form-group">
-        <label>Core Mechanic</label>
+        <label htmlFor="concept-mechanic">Core Mechanic</label>
         <input
+          id="concept-mechanic"
           type="text"
           name="mechanic"
           value={formData.mechanic}

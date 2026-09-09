@@ -7,29 +7,50 @@ export default function ConceptCards({ concepts }) {
     setExpanded(expanded === index ? null : index);
   };
 
+  const handleKeyDown = (e, index) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleExpand(index);
+    }
+  };
+
   return (
     <div className="concepts-grid">
-      {concepts.map((concept, index) => (
-        <div key={index} className="concept-card">
-          <div className="concept-header" onClick={() => toggleExpand(index)}>
-            <h3>{concept.title}</h3>
-            <span className="expand-icon">{expanded === index ? '−' : '+'}</span>
-          </div>
+      {concepts.map((concept, index) => {
+        const isOpen = expanded === index;
+        const detailsId = `concept-details-${index}`;
 
-          <p className="pitch">{concept.pitch}</p>
-
-          {expanded === index && (
-            <div className="concept-details">
-              <div>
-                <strong>Mechanics:</strong> {concept.mechanics}
-              </div>
-              <div>
-                <strong>Target Audience:</strong> {concept.target_audience}
-              </div>
+        return (
+          <div key={index} className="concept-card">
+            <div
+              className="concept-header"
+              role="button"
+              tabIndex={0}
+              aria-expanded={isOpen}
+              aria-controls={detailsId}
+              aria-label={`${concept.title} - ${isOpen ? 'collapse' : 'expand'}`}
+              onClick={() => toggleExpand(index)}
+              onKeyDown={(e) => handleKeyDown(e, index)}
+            >
+              <h3>{concept.title}</h3>
+              <span className="expand-icon" aria-hidden="true">{isOpen ? '−' : '+'}</span>
             </div>
-          )}
-        </div>
-      ))}
+
+            <p className="pitch">{concept.pitch}</p>
+
+            {isOpen && (
+              <div className="concept-details" id={detailsId}>
+                <div>
+                  <strong>Mechanics:</strong> {concept.mechanics}
+                </div>
+                <div>
+                  <strong>Target Audience:</strong> {concept.target_audience}
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }

@@ -188,3 +188,11 @@
 .concept-details strong {
   color: #f0f9ff;
 }
+
+/* Keyboard focus */
+.concept-header:focus-visible,
+.modal-close:focus-visible,
+.generate-btn:focus-visible {
+  outline: 2px solid #22d3ee;
+  outline-offset: 2px;
+}
