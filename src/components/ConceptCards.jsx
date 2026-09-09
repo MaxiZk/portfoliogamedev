@@ -7,13 +7,30 @@ export default function ConceptCards({ concepts }) {
     setExpanded(expanded === index ? null : index);
   };
 
+  const handleKeyDown = (e, index) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleExpand(index);
+    }
+  };
+
   return (
     <div className="concepts-grid">
       {concepts.map((concept, index) => (
         <div key={index} className="concept-card">
-          <div className="concept-header" onClick={() => toggleExpand(index)}>
+          <div
+            className="concept-header"
+            role="button"
+            tabIndex="0"
+            onClick={() => toggleExpand(index)}
+            onKeyDown={(e) => handleKeyDown(e, index)}
+            aria-expanded={expanded === index}
+            aria-label={`${concept.title} - ${expanded === index ? 'collapse' : 'expand'} details`}
+          >
             <h3>{concept.title}</h3>
-            <span className="expand-icon">{expanded === index ? '−' : '+'}</span>
+            <span className="expand-icon" aria-hidden="true">
+              {expanded === index ? '−' : '+'}
+            </span>
           </div>
 
           <p className="pitch">{concept.pitch}</p>
