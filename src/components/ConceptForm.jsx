@@ -20,8 +20,13 @@ export default function ConceptForm({ onGenerate, loading }) {
   return (
     <form onSubmit={handleSubmit} className="concept-form">
       <div className="form-group">
-        <label>Genre</label>
-        <select name="genre" value={formData.genre} onChange={handleChange}>
+        <label htmlFor="genre-select">Genre</label>
+        <select 
+          id="genre-select"
+          name="genre" 
+          value={formData.genre} 
+          onChange={handleChange}
+        >
           <option>Action</option>
           <option>Puzzle</option>
           <option>RPG</option>
@@ -34,8 +39,13 @@ export default function ConceptForm({ onGenerate, loading }) {
       </div>
 
       <div className="form-group">
-        <label>Mood</label>
-        <select name="mood" value={formData.mood} onChange={handleChange}>
+        <label htmlFor="mood-select">Mood</label>
+        <select 
+          id="mood-select"
+          name="mood" 
+          value={formData.mood} 
+          onChange={handleChange}
+        >
           <option>Dark</option>
           <option>Playful</option>
           <option>Epic</option>
@@ -47,8 +57,9 @@ export default function ConceptForm({ onGenerate, loading }) {
       </div>
 
       <div className="form-group">
-        <label>Core Mechanic</label>
+        <label htmlFor="mechanic-input">Core Mechanic</label>
         <input
+          id="mechanic-input"
           type="text"
           name="mechanic"
           value={formData.mechanic}
