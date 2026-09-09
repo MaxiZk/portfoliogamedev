@@ -139,16 +139,13 @@ See `/lighthouse-report.html` for the full audit. The first run scored 89 / 82 o
 
 ## Reflection
 
-**Hardest part:** Parsing Claude's JSON reliably. Initial approach had no error boundaries; added try-catch + fallback messaging.
+**Hardest part:** Getting Claude to return JSON I could trust. The first version broke on markdown fences and on refusals with no text block, so the client now strips fences, checks `stop_reason`, validates the shape, and maps every SDK error class to a human message.
 
-**Surprise:** The form validation logic became the most complex piece, not the API call. User expectations around error states drove 40% of the code.
+**Surprise:** The tests found more accessibility gaps than my own clicking around. Seven of the first twelve failed on things I thought were fine: labels not tied to inputs, card headers that were plain divs, no `aria-expanded`. Lighthouse then flagged the hot pink START GAME button at 3.5:1 contrast, which my eyes had happily accepted.
 
-**Next time:** Would start with error states + edge cases before happy path. Also would add request debouncing (users spam the button).
+**What I'd do differently:** Write the accessibility tests before the components, not after. Every a11y fix here was a rewrite of something that already "worked", and a focus trap is much easier to design in than to bolt on. I would also compress the hero backgrounds on day one; four 900 kB images are the whole reason Performance sits at 80.
 
-**What I learned:**
-- AI output is inherently unpredictable — structure your data contracts tightly
-- Modal focus management is harder than it looks (StrictMode double-mounts caught a bug)
-- Lighthouse doesn't penalize API latency, but users do — consider skeleton loading states early
+**What I learned:** AI output is unpredictable, so the contract around it has to be strict: parse, validate, and fail with a message the user can act on. And a screenshot-driven UI is only half the job; the keyboard, screen reader, and Lighthouse pass are what turn a good-looking page into a shippable one.
 
 ## Author
 
